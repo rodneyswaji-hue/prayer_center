@@ -1,12 +1,12 @@
 import { motion } from "framer-motion"
 
 const images = [
-  "/public/bible-focus.jpeg",
-  "/public/close-focus.jpeg",
-  "/public/people_talking.jpeg",
-  "/public/two-worshipers.jpeg",
-  "/public/sitting-on-rock.jpeg.jpeg",
-  "/public/worshiping-in-bush.jpeg.jpeg"
+  "/bible-focus.jpeg",
+  "/close-focus.jpeg",
+  "/people_talking.jpeg",
+  "/two-worshipers.jpeg",
+  "/sitting-on-rock.jpeg",
+  "/worshiping-in-bush.jpeg"
 ]
 
 export default function MasonryGallery() {
