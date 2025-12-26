@@ -28,7 +28,7 @@ export default function VisionGrid() {
   return (
     <section className="bg-stone-beige py-24">
       <div className="
-          flex md:grid md:grid-cols-3 
+          flex md:grid md:grid-cols-3 lg:grid-cols-4
           gap-6 
           overflow-x-auto md:overflow-visible 
           snap-x snap-mandatory 
