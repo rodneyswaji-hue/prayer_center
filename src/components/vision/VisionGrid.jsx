@@ -27,18 +27,21 @@ export default function VisionGrid() {
 
   return (
     <section className="bg-stone-beige py-24">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {visions.map((item, index) => (
-            <VisionCard 
-              key={index}
-              title={item.title}
-              text={item.text}
-              icon={item.icon}
-              index={index} // Passed for staggered animation
-            />
-          ))}
-        </div>
+      <div className="
+          flex md:grid md:grid-cols-3 
+          gap-6 
+          overflow-x-auto md:overflow-visible 
+          snap-x snap-mandatory 
+          pb-12 px-6 
+          -mx-6 md:mx-0
+          scrollbar-hide
+      ">
+        {/* Map your VisionCards here */}
+        {visions.map((v, i) => (
+            <div key={i} className="min-w-[85vw] md:min-w-0 snap-center">
+                <VisionCard {...v} index={i} />
+            </div>
+        ))}
       </div>
     </section>
   );

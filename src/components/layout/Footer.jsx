@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
 
           {/* DONATION CALL TO ACTION */}
-          <div className="bg-white/5 p-6 rounded-2xl border border-white/10 text-center">
+          <div className="hidden md:block bg-white/5 p-6 rounded-2xl border border-white/10 text-center">
             <Heart className="text-holy-gold mx-auto mb-4" fill="currentColor" size={28} />
             <h4 className="text-white font-serif font-bold mb-2">Support the Vision</h4>
             <p className="text-xs mb-4">Help us develop the sanctuary and support our community programs.</p>
