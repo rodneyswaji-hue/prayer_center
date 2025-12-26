@@ -32,7 +32,7 @@ export default function HeroSection() {
         >
           <span className="h-px w-8 bg-holy-gold hidden md:block" />
           <span className="text-holy-gold font-bold tracking-[0.2em] uppercase text-xs md:text-sm">
-            Welcome to the Sanctuary
+            Welcome to
           </span>
           <span className="h-px w-8 bg-holy-gold hidden md:block" />
         </motion.div>
@@ -44,9 +44,9 @@ export default function HeroSection() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-6 leading-[1.1]"
         >
-          The Tabernacle <br className="hidden md:block" />
+          The Tabernacle of <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-stone-300">
-            of Moses
+           Moses Prayer Center
           </span>
         </motion.h1>
 
