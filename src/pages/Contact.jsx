@@ -65,7 +65,7 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* THE PRAYER REQUEST / MESSAGE FORM */}
+          {/* THE PRAYER REQUEST / MESSAGE FORM
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -94,7 +94,7 @@ export default function Contact() {
                 Submit Request
               </motion.button>
             </form>
-          </motion.div>
+          </motion.div> */}
 
           {/* LOCATION CARD - App Style */}
           <div className="mt-8 overflow-hidden rounded-[2.5rem] bg-spirit-green text-white shadow-lg relative group">
