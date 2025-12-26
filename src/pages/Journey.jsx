@@ -24,7 +24,7 @@ export default function Journey() {
       <div className="bg-stone-beige pb-24 space-y-24">
         <StoryBlock 
           title="The Journey to Kyevaluki Mountain" 
-          image="/top-view.jpeg" // Pass an image to the block
+          image="/far-focus.jpeg" // Pass an image to the block
           reverse={false}
         >
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -39,7 +39,7 @@ export default function Journey() {
 
         <StoryBlock 
           title="More Than a Place of Prayer" 
-          image="/close-focus.jpeg"
+          image="/preaching.jpeg"
           reverse={true} // Alternating side
         >
           <p className="text-gray-700 leading-relaxed mb-4">

@@ -39,7 +39,7 @@ export default function Home() {
         <StoryBlock
           index={0}
           title="Foreword: A Legacy of Faith and Gratitude"
-          image="/sitting-on-rock.jpeg"
+          image="/top-view.jpeg"
           caption="A place preserved by faith, entrusted for generations."
         >
           <p>
@@ -66,7 +66,7 @@ export default function Home() {
           index={1}
           caption="A sacred Mountain of Faith"
           title="A Sacred Mountain of Faith"
-          image="/walking-bush.jpeg"
+          image="/worshiping-in-bush.jpeg"
           reverse
         >
           <p>
