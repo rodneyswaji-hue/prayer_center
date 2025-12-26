@@ -39,7 +39,7 @@ export default function Home() {
         <StoryBlock
           index={0}
           title="Foreword: A Legacy of Faith and Gratitude"
-          image="/top-view.jpeg"
+          image="/people_talking.jpeg"
           caption="A place preserved by faith, entrusted for generations."
         >
           <p>

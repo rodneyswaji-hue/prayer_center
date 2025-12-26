@@ -19,8 +19,8 @@ export default function VisionGrid() {
       icon: Users,
     },
     {
-      title: "Community Care & Counseling",
-      text: "Compassionate engagement and faith-based counseling rooted in dignity and Christian values.",
+      title: "Community Care, Counseling & LGBTQ+ Mainstreaming",
+      text: "Compassionate engagement and faith-based counseling rooted in dignity and Christian values for everyone.",
       icon: HeartHandshake,
     },
   ];

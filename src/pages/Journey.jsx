@@ -1,9 +1,23 @@
 import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { Volume2, VolumeX } from "lucide-react"; // Icons for the sound toggle
 import PageWrapper from "../components/layout/PageWrapper";
 import StoryBlock from "../components/story/StoryBlock";
 import MasonryGallery from "../components/gallery/MasonryGallery";
 
 export default function Journey() {
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef(null);
+
+  const toggleSound = () => {
+    if (isMuted) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+    setIsMuted(!isMuted);
+  };
+
   return (
     <PageWrapper>
       {/* SECTION HEADER */}
@@ -21,10 +35,11 @@ export default function Journey() {
       </section>
 
       {/* STORY CONTENT */}
-      <div className="bg-stone-beige pb-24 space-y-24">
+      <div className="bg-stone-beige pb-24 space-y-0"> {/* Changed space-y to 0 to manage gaps manually */}
+        
         <StoryBlock 
           title="The Journey to Kyevaluki Mountain" 
-          image="/far-focus.jpeg" // Pass an image to the block
+          image="/walking-bush.jpeg"
           reverse={false}
         >
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -37,10 +52,59 @@ export default function Journey() {
           </p>
         </StoryBlock>
 
+        {/* --- ENVIRONMENTAL INTERMISSION START --- */}
+        <section className="relative h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
+          {/* Audio Element (Hidden) */}
+          <audio ref={audioRef} loop>
+            <source src="/nature-wind.mp3" type="audio/mpeg" />
+          </audio>
+
+          <motion.div 
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 2 }}
+            className="absolute inset-0 z-0"
+          >
+            <img 
+              src="/environment.jpeg" 
+              className="w-full h-full object-cover"
+              alt="Mountain Thickets"
+            />
+            <div className="absolute inset-0 bg-black/30 md:bg-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-beige via-transparent to-transparent" />
+          </motion.div>
+
+          <div className="relative z-10 max-w-2xl px-6 text-center text-white">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-3xl relative"
+            >
+              {/* Sound Toggle Button */}
+              <button 
+                onClick={toggleSound}
+                className="absolute -top-12 left-1/2 -translate-x-1/2 bg-holy-gold text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform"
+              >
+                {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} className="animate-pulse" />}
+              </button>
+
+              <h2 className="text-2xl md:text-4xl font-serif font-bold mb-4 text-holy-gold">
+                The Natural Sanctuary
+              </h2>
+              <p className="text-base md:text-lg leading-relaxed italic font-light">
+                "The thorns and thickets were once barriers; today, they are the 
+                sanctuary's natural walls, preserving a silence that allows the soul 
+                to hear God clearly."
+              </p>
+            </motion.div>
+          </div>
+        </section>
+        {/* --- ENVIRONMENTAL INTERMISSION END --- */}
+
         <StoryBlock 
           title="More Than a Place of Prayer" 
-          image="/preaching.jpeg"
-          reverse={true} // Alternating side
+          image="/top-view2.jpeg"
+          reverse={true}
         >
           <p className="text-gray-700 leading-relaxed mb-4">
             Over time, the site also attracted Girl Guides, Scouts, and school
