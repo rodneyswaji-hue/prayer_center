@@ -4,14 +4,14 @@ import StoryBlock from "../components/story/StoryBlock"
 export default function Partners() {
   return (
     <PageWrapper>
-      <StoryBlock title="Walking the Journey Together">
+      <StoryBlock title="Walking the Journey Together" image="/humanity_call_international.webp">
         <p>
           The Tabernacle of Moses Prayer and Fasting Center is grateful for every
           individual, family, and organization that has supported this vision.
         </p>
       </StoryBlock>
 
-      <StoryBlock title="Tribute">
+      <StoryBlock title="Tribute" image="/humanity_calls_international2.webp">
         <p className="font-semibold">
           HUMANITY CALLS INTERNATIONAL
         </p>
