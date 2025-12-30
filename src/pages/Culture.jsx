@@ -1,236 +1,214 @@
 import PageWrapper from "../components/layout/PageWrapper";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Play, Music, CloudRain, Users } from "lucide-react";
-import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useState, useEffect } from "react";
 import VideoModal from "../components/ui/VideoModal";
 
-// Placeholder data - Replace strings with your actual file paths
-const DANCE_VIDEOS = [
-  { 
-    id: 1, 
-    title: "The Entrance", 
-    duration: "2:15", 
-    thumbnail: "/video-thumb-1.jpg", 
-    videoUrl: "/videos/dancing_video.mp4" // Path to your video file in public folder
+// 1. UNIFIED DATA STREAM (Mix of Images and Videos)
+const SLIDES = [
+  {
+    id: 1,
+    type: "image",
+    src: "/cultural_drum.jpeg",
+    title: "The Heartbeat of Kilumi",
+    subtitle: "Sacred Heritage",
+    description: "When the drums speak, the heavens listen. These are the original vessels used by our ancestors to invoke the rain."
   },
-  { 
-    id: 2, 
-    title: "Rhythm of Rain", 
-    duration: "3:40", 
-    thumbnail: "/video-thumb-2.jpg", 
-    videoUrl: "/videos/kilume_dance2.mp4" 
+  {
+    id: 2,
+    type: "image",
+    src: "/preparing.jpeg",
+    title: "Ritual Preparation",
+    subtitle: "Behind the Scenes",
+    description: "The dancers adorn themselves in traditional regalia, every bead and feather carrying a specific spiritual meaning."
   },
-  { 
-    id: 3, 
-    title: "Celebration", 
-    duration: "1:30", 
-    thumbnail: "/video-thumb-3.jpg", 
-    videoUrl: "/videos/kilume_dance3.mp4" 
+  {
+    id: 3,
+    type: "video",
+    src: "/video-thumb-1.jpg", // Fallback to a relevant image if you lack a thumb
+    videoUrl: "/videos/dancing_video.mp4",
+    title: "The Entrance",
+    subtitle: "Live Performance",
+    description: "Watch the powerful opening ceremony as the Kwakathule dancers enter the sacred circle.",
+    duration: "2:15"
+  },
+  {
+    id: 4,
+    type: "video",
+    src: "/video-thumb-2.jpg",
+    videoUrl: "/videos/kilume_dance2.mp4",
+    title: "Rhythm of Rain",
+    subtitle: "Live Performance",
+    description: "The intensity rises as the drum beats synchronize with the chanting to call upon the blessings of the sky.",
+    duration: "3:40"
+  },
+  {
+    id: 5,
+    type: "image",
+    src: "/prophetess.jpeg",
+    title: "The Elders' Blessing",
+    subtitle: "Community Leadership",
+    description: "Guided by wisdom passed down through generations, we preserve these traditions for the future."
   }
 ];
 
-const GALLERY_IMAGES = [
-  "/cultural_drum.jpeg", // The one you attached
-  "/prophetess.jpeg",   // Replace with your other photos
-  "/preparing.jpeg"     // Replace with your other photos
-];
+// Animation Variants for the Slide Effect
+const slideVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? 1000 : -1000,
+    opacity: 0,
+    scale: 1.1 // Subtle zoom effect on entry
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+    scale: 1
+  },
+  exit: (direction) => ({
+    zIndex: 0,
+    x: direction < 0 ? 1000 : -1000,
+    opacity: 0,
+    scale: 0.95
+  })
+};
 
 export default function Culture() {
- 
+  const [[page, direction], setPage] = useState([0, 0]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const { scrollYProgress } = useScroll({
+  
+  // Calculate current slide index based on page number
+  const index = Math.abs(page % SLIDES.length);
+  const currentSlide = SLIDES[index];
 
-    offset: ["start start", "end end"]
-  });
+  // Navigation Handlers
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
 
-  // Parallax effect for the drum image
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  // Auto-advance slides every 8 seconds (unless video is playing)
+  useEffect(() => {
+    if (selectedVideo) return;
+    const timer = setInterval(() => paginate(1), 8000);
+    return () => clearInterval(timer);
+  }, [page, selectedVideo]);
 
   return (
     <PageWrapper>
-      
-      {/* 1. CINEMATIC HERO (Video Background) */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {/* If you can't upload the video, use the best group photo here with a zoom effect */}
-          <motion.div 
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
-            className="w-full h-full"
-          >
-             <div className="absolute inset-0 bg-black/60 z-10" />
-             <img 
-               src="/cultural_drum.jpeg" 
-               className="w-full h-full object-cover grayscale brightness-50" 
-               alt="Background" 
-             />
-          </motion.div>
-        </div>
-
-        <div className="relative z-20 text-center text-white px-6 max-w-4xl">
+      {/* FULL SCREEN SLIDER SECTION */}
+      <section className="relative h-screen w-full overflow-hidden bg-black text-white">
+        
+        {/* 1. BACKGROUND IMAGE & TRANSITION */}
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            key={page}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.5 }
+            }}
+            className="absolute inset-0 z-0"
           >
-            <span className="text-holy-gold font-bold tracking-[0.3em] uppercase text-xs md:text-sm mb-4 block">
-              Heritage & History
-            </span>
-            <h1 className="text-5xl md:text-8xl font-serif font-bold mb-6">
-              The Beat of <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-holy-gold">Kilumi</span>
-            </h1>
-            <p className="text-lg md:text-2xl font-light text-gray-200 max-w-2xl mx-auto leading-relaxed">
-              "When the drums speak, the heavens listen." <br/>
-              Experience the sacred Kwakathule traditions.
-            </p>
+            {/* Dark Overlay for text readability */}
+            <div className="absolute inset-0 bg-black/50 z-10" />
+            
+            <img 
+              src={currentSlide.src} 
+              alt={currentSlide.title} 
+              className="w-full h-full object-cover"
+              onError={(e) => {e.target.src = "/cultural_drum.jpeg"}} // Safety fallback
+            />
           </motion.div>
-        </div>
-      </section>
+        </AnimatePresence>
 
-
-      {/* 2. THE ARTIFACT SPOTLIGHT (The Drums) */}
-      <section className="bg-[#1a1a1a] text-white py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          
-          <div className="order-2 md:order-1 relative">
-            {/* Artistic circle behind the drum */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-red-900/20 rounded-full blur-3xl" />
+        {/* 2. TEXT CONTENT OVERLAY */}
+        <div className="absolute inset-0 z-20 flex items-center">
+          <div className="max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12">
             
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="relative z-10 rotate-[-2deg] hover:rotate-0 transition-transform duration-700"
+            <motion.div 
+              key={currentSlide.id} // Re-animate text on slide change
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="md:pr-12"
             >
-              <img 
-                src="/kilumi_dancers.jpeg" 
-                alt="Kilumi Drums" 
-                className="rounded-2xl shadow-2xl border border-white/10 w-full"
-              />
-              {/* Caption Tag */}
-              <div className="absolute -bottom-6 -right-6 bg-white text-black p-4 rounded-xl shadow-lg max-w-[200px] hidden md:block">
-                <p className="text-xs font-bold uppercase tracking-widest mb-1 text-red-700">Artifact</p>
-                <p className="text-sm font-serif italic">Original Kilumi Drums used for rain prayer ceremonies.</p>
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/30 bg-black/20 backdrop-blur-md text-xs font-bold uppercase tracking-widest mb-6 text-holy-gold">
+                {currentSlide.type === 'video' ? <Play size={12} /> : null}
+                {currentSlide.subtitle}
               </div>
-            </motion.div>
-          </div>
 
-          <div className="order-1 md:order-2">
-            <div className="flex items-center gap-3 mb-6 text-red-500">
-              <CloudRain size={32} />
-              <span className="text-sm font-bold uppercase tracking-widest">The Prayer for Rain</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-              Voices of the Earth
-            </h2>
-            <p className="text-gray-400 text-lg leading-relaxed mb-6">
-              The <strong>Kilumi dance</strong> is not just a performance; it is a sacred invocation. 
-              Historically, when the land was dry and the skies were silent, the elders would bring out these drums.
-            </p>
-            <p className="text-gray-400 text-lg leading-relaxed mb-8 border-l-2 border-red-800 pl-6">
-              The rhythmic beating was believed to reach the ears of the Divine, inviting the blessing of rain 
-              to nourish the parched earth. Today, the <strong>Kwakathule Traditional Dancers</strong> keep this 
-              powerful heritage alive.
-            </p>
-            
-            <div className="flex gap-4">
-               <div className="flex items-center gap-2 text-sm text-holy-gold border border-holy-gold/30 px-4 py-2 rounded-full">
-                  <Music size={16} />
-                  <span>Ritual Rhythms</span>
-               </div>
-               <div className="flex items-center gap-2 text-sm text-holy-gold border border-holy-gold/30 px-4 py-2 rounded-full">
-                  <Users size={16} />
-                  <span>Community Unity</span>
-               </div>
-            </div>
-          </div>
+              {/* Title */}
+              <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
+                {currentSlide.title}
+              </h1>
 
-        </div>
-      </section>
+              {/* Description */}
+              <p className="text-lg md:text-xl text-gray-200 font-light leading-relaxed mb-8 max-w-xl">
+                {currentSlide.description}
+              </p>
 
-
-      {/* 3. VIDEO SHOWCASE (Netflix Style) */}
-      <section className="bg-stone-100 py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-spirit-green mb-2">Live Performances</h2>
-              <p className="text-gray-500">Watch the Kwakathule Dancers in motion.</p>
-            </div>
-          </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-            {DANCE_VIDEOS.map((video, i) => (
-                <motion.div 
-                key={video.id}
-                onClick={() => setSelectedVideo(video)}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }} // <--- THIS WAS MISSING!
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="group relative aspect-video bg-black rounded-2xl overflow-hidden shadow-lg cursor-pointer transform transition-all hover:-translate-y-2"
+              {/* ACTION BUTTON (Only if it's a video) */}
+              {currentSlide.type === 'video' && (
+                <button
+                  onClick={() => setSelectedVideo(currentSlide)}
+                  className="group flex items-center gap-4 bg-red-700 hover:bg-red-800 text-white px-8 py-4 rounded-full transition-all hover:scale-105 shadow-xl shadow-red-900/20"
                 >
-                {/* THUMBNAIL IMAGE */}
-                <div className={`absolute inset-0 bg-stone-800 ${video.thumbnail ? '' : 'animate-pulse'}`}>
-                    {/* We use the drum image as a fallback if the specific video thumb fails */}
-                    <img 
-                    src={video.thumbnail || "/cultural_drum.jpeg"} 
-                    alt={video.title}
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity"
-                    onError={(e) => {e.target.src = "/cultural_drum.jpeg"}} // Fallback if file not found
-                    />
-                </div>
-                
-                {/* PLAY BUTTON OVERLAY */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl border border-white/20">
-                    <Play fill="white" className="text-white ml-1 w-8 h-8" />
-                    </div>
-                </div>
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <Play size={16} className="text-red-700 ml-1" />
+                  </div>
+                  <span className="font-bold tracking-wide">Watch Performance</span>
+                </button>
+              )}
+            </motion.div>
 
-                {/* TITLE BAR */}
-                <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
-                    <h3 className="text-white font-bold font-serif tracking-wide">{video.title}</h3>
-                    <p className="text-holy-gold text-xs font-bold uppercase tracking-widest mt-1">{video.duration}</p>
-                </div>
-                </motion.div>
-            ))}
-            </div>
+          </div>
         </div>
+
+        {/* 3. NAVIGATION CONTROLS */}
+        
+        {/* Arrows */}
+        <button 
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all text-white hover:scale-110"
+          onClick={() => paginate(-1)}
+        >
+          <ChevronLeft size={32} />
+        </button>
+        <button 
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all text-white hover:scale-110"
+          onClick={() => paginate(1)}
+        >
+          <ChevronRight size={32} />
+        </button>
+
+        {/* Progress Dots at Bottom */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+          {SLIDES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setPage([i, i > index ? 1 : -1]); // Smart direction calculation
+              }}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                i === index ? "w-12 bg-holy-gold" : "w-6 bg-white/30 hover:bg-white/60"
+              }`}
+            />
+          ))}
+        </div>
+
       </section>
 
-
-      {/* 4. IMMERSIVE GALLERY (Masonry) */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-spirit-green mb-6">
-            Preserving the Tradition
-          </h2>
-          <div className="w-24 h-1 bg-red-800 mx-auto rounded-full" />
-        </div>
-
-        {/* Using a grid that focuses on the images */}
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-           {GALLERY_IMAGES.map((src, index) => (
-             <motion.div 
-               key={index}
-               whileHover={{ scale: 1.02 }}
-               className={`rounded-2xl overflow-hidden shadow-md ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}
-             >
-               <img src={src} alt="Kwakathule Dancer" className="w-full h-full object-cover min-h-[300px]" />
-             </motion.div>
-           ))}
-        </div>
-      </section>
-      {/* VIDEO MODAL */}
+      {/* VIDEO MODAL (Kept existing functionality) */}
       {selectedVideo && (
         <VideoModal 
           video={selectedVideo} 
           onClose={() => setSelectedVideo(null)} 
         />
       )}
-
     </PageWrapper>
   );
 }

@@ -1,85 +1,73 @@
-import { Facebook, Mail, Phone, MapPin, Heart } from "lucide-react";
+import { Facebook, Mail, Phone, Heart } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1B3618] text-stone-beige/80 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+    <footer className="bg-[#1B3618] text-stone-100/80 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 py-5">
+        
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           
-          {/* BRAND SECTION */}
-          <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-               <div className="bg-white p-1 rounded-lg w-10 h-10 flex items-center justify-center overflow-hidden">
-                  <img src="logo.png" alt="Logo" className="object-contain" />
-               </div>
-               <span className="text-white font-serif font-bold text-lg leading-tight">
-                 Mountain <br/> Prayer Center
-               </span>
+          {/* LEFT: Brand Identity */}
+          <div className="flex items-center gap-3">
+             <div className="h-9 w-9 rounded-md overflow-hidden border border-white/20 bg-black/20 shrink-0">
+                <img 
+                  src="/logo.png" 
+                  alt="Logo" 
+                  className="w-full h-full object-cover"
+                />
+             </div>
+             <div>
+               <h3 className="text-white font-bold font-serif text-sm tracking-wide">The Tabernacle</h3>
+               <p className="text-[10px] text-green-200/60 uppercase tracking-wider">Prayer Mountain</p>
+             </div>
+          </div>
+
+          {/* RIGHT: Contact & Actions (Rearranged for clean look) */}
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-xs font-medium">
+            
+            {/* Contact Details */}
+            <div className="flex items-center gap-6">
+               <a href="tel:+254734668826" className="flex items-center gap-2 hover:text-white transition-colors group">
+                  <Phone size={14} className="text-green-400 group-hover:text-white transition-colors" />
+                  <span>+254 734 668 826</span>
+               </a>
+               <a href="mailto:info@mountainprayer.org" className="flex items-center gap-2 hover:text-white transition-colors group">
+                  <Mail size={14} className="text-green-400 group-hover:text-white transition-colors" />
+                  <span>info@mountainprayer.org</span>
+               </a>
             </div>
-            <p className="text-sm leading-relaxed mb-6">
-              A sanctuary dedicated to spiritual growth and community transformation in the heart of Machakos County.
-            </p>
-          </div>
 
-          {/* QUICK LINKS */}
-          <div>
-            <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Explore</h4>
-            <ul className="space-y-4 text-sm font-medium">
-              <li><a href="/" className="hover:text-holy-gold transition-colors">Our Story</a></li>
-              <li><a href="/vision" className="hover:text-holy-gold transition-colors">Our Vision</a></li>
-              <li><a href="/journey" className="hover:text-holy-gold transition-colors">The Journey</a></li>
-            </ul>
-          </div>
+            <div className="w-px h-4 bg-white/20 hidden md:block"></div>
 
-          {/* CONTACT INFO */}
-          <div>
-            <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Get in Touch</h4>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-holy-gold shrink-0" />
-                <span>Kyevaluki Mountain, Machakos, Kenya</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="text-holy-gold shrink-0" />
-                <span>+254 734 668 826</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail size={18} className="text-holy-gold shrink-0" />
-                <span>info@mountainprayer.org</span>
-              </li>
-            </ul>
-          </div>
+            {/* Social & Action */}
+            <div className="flex items-center gap-4">
+               <a href="#" className="hover:text-white transition-colors" aria-label="Facebook">
+                  <Facebook size={16} />
+               </a>
+               
+               {/* Mini Donate Button */}
+               <a 
+                 href="#donate"
+                 className="flex items-center gap-2 bg-white/10 hover:bg-green-600 text-white px-3 py-1.5 rounded-full transition-all border border-white/10"
+               >
+                 <Heart size={12} className="text-red-400 fill-current" />
+                 <span>Give</span>
+               </a>
+            </div>
 
-          {/* DONATION CALL TO ACTION */}
-          <div className="hidden md:block bg-white/5 p-6 rounded-2xl border border-white/10 text-center">
-            <Heart className="text-holy-gold mx-auto mb-4" fill="currentColor" size={28} />
-            <h4 className="text-white font-serif font-bold mb-2">Support the Vision</h4>
-            <p className="text-xs mb-4">Help us develop the sanctuary and support our community programs.</p>
-            <a 
-              href="/donate" 
-              className="block w-full bg-holy-gold hover:bg-[#b08e4d] text-white py-2 rounded-xl text-sm font-bold transition-all"
-            >
-              Donate Now
-            </a>
           </div>
 
         </div>
 
-        {/* BOTTOM BAR */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <p>© {currentYear} Mountain Prayer Center. Tabernacle of Moses.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white">Privacy Policy</a>
-            <a href="#" className="hover:text-white">Terms of Service</a>
-          </div>
-          <div className="flex gap-4">
-             <a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-holy-gold transition-all">
-                <Facebook size={16} />
-             </a>
-          </div>
+        {/* BOTTOM: Copyright (Subtle) */}
+        <div className="mt-4 pt-4 border-t border-white/5 text-center md:text-left">
+           <p className="text-[10px] opacity-40">
+             © {currentYear} Tabernacle of Moses. All rights reserved.
+           </p>
         </div>
+
       </div>
     </footer>
   );

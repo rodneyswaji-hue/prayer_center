@@ -3,6 +3,8 @@ import HeroSection from "../components/hero/HeroSection"
 import StoryBlock from "../components/story/StoryBlock"
 import VisionGrid from "../components/vision/VisionGrid"
 import { motion, useScroll } from "framer-motion"
+import MissionGrid from "../components/mission/MissionGrid"
+
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll()
@@ -39,7 +41,7 @@ export default function Home() {
         <StoryBlock
           index={0}
           title="Foreword: A Legacy of Faith and Gratitude"
-          image="/people_talking.jpeg"
+          images={["/people_talking.jpeg", "/preaching.jpeg"]}
           caption="A place preserved by faith, entrusted for generations."
         >
           <p>
@@ -66,7 +68,7 @@ export default function Home() {
           index={1}
           caption="A sacred Mountain of Faith"
           title="A Sacred Mountain of Faith"
-          image="/worshiping-in-bush.jpeg"
+          images={["/worshiping-in-bush.jpeg", "/walking-bush.jpeg"]}
           reverse
         >
           <p>
@@ -84,7 +86,7 @@ export default function Home() {
           index={2}
           caption="A Vision Realized"
           title="A Turning Point"
-          image="/sitting-on-rock.jpeg"
+          images={["/sitting-on-rock.jpeg", "/Sitting-on-rock.jpeg"]}
         >
           <p>
             In 2024, a simple question changed everything:
@@ -99,12 +101,12 @@ export default function Home() {
           </p>
         </StoryBlock>
       </div>
-
+      <MissionGrid />
       {/* VISION GRID */}
-      <section className="bg-white py-24">
+      <section id="vision" className="bg-white py-24">
         <div className="max-w-4xl mx-auto text-center px-6 mb-16">
           <h2 className="text-4xl font-serif font-bold text-spirit-green mb-4">
-            Our Commitment
+            Our Vision
           </h2>
           <p className="text-gray-600">
             Building a future where spiritual heritage and community growth go

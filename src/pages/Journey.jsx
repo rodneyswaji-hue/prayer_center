@@ -39,7 +39,7 @@ export default function Journey() {
         
         <StoryBlock 
           title="The Journey to Kyevaluki Mountain" 
-          image="/walking-bush.jpeg"
+          images={["/bible-focus.jpeg", "/close-focus.jpeg"]}
           reverse={false}
         >
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -103,7 +103,7 @@ export default function Journey() {
 
         <StoryBlock 
           title="More Than a Place of Prayer" 
-          image="/top-view2.jpeg"
+          images={["/environment.jpeg", "/far-focus.jpeg"]}
           reverse={true}
         >
           <p className="text-gray-700 leading-relaxed mb-4">

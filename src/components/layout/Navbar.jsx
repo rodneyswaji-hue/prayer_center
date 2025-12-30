@@ -19,7 +19,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "The Journey", path: "/journey" },
-    { name: "Our Vision", path: "/vision" },
+ 
     { name: "Contact", path: "/contact" },
     { name: "Partners", path: "/partners" },
     { name: "Culture", path: "/culture" },
@@ -82,6 +82,7 @@ export default function Navbar() {
                 )}
               </Link>
             ))}
+
           </nav>
 
           {/* ACTIONS */}

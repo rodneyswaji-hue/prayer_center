@@ -1,27 +1,42 @@
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
+import { useRef, useState, useEffect } from "react"
 
 export default function StoryBlock({
   title,
-  image,
+  images = [], // NOW ACCEPTS AN ARRAY OF STRINGS
   caption,
   reverse = false,
   index = 0,
   children
 }) {
   const ref = useRef(null)
+  
+  // 1. STATE FOR IMAGE CAROUSEL
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  // 2. PARALLAX LOGIC
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   })
-
-  // subtle parallax
   const y = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"])
 
-  const bgTone =
-    index % 2 === 0 ? "bg-stone-beige" : "bg-white"
+  // 3. AUTOMATIC IMAGE SWITCHER
+  useEffect(() => {
+    // If we don't have multiple images, don't run the timer
+    if (!images || images.length <= 1) return;
 
-// inside StoryBlock.jsx
+    const timer = setInterval(() => {
+      setCurrentImgIndex((prev) => (prev + 1) % images.length);
+    }, 5000); // Switch every 5 seconds
+
+    return () => clearInterval(timer);
+  }, [images]);
+
+  const bgTone = index % 2 === 0 ? "bg-stone-beige" : "bg-white"
+
+  // Fallback if images array is empty
+  const activeImage = images.length > 0 ? images[currentImgIndex] : "";
 
   return (
     <section ref={ref} className={`${bgTone} py-20 md:py-28 overflow-hidden`}>
@@ -29,26 +44,37 @@ export default function StoryBlock({
         
         {/* IMAGE CONTAINER */}
         <motion.div
-          style={{ y }} // Keep your parallax
+          style={{ y }} 
           className={`relative h-[50vh] md:h-[420px] w-full shadow-lg ${
             reverse ? "md:order-last" : ""
           }`}
         >
-          <div className="w-full h-full rounded-2xl overflow-hidden relative">
-              <img
-                src={image}
-                alt={title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              {/* Dark Gradient Overlay for Mobile Text Readability if needed */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:hidden" />
+          <div className="w-full h-full rounded-2xl overflow-hidden relative bg-gray-200">
+             {/* 4. ANIMATE PRESENCE FOR SMOOTH FADING */}
+             <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImgIndex} // Key is crucial for the transition to trigger
+                  src={activeImage}
+                  alt={title}
+                  
+                  // Animation: Fade in and slight zoom (Ken Burns effect)
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }} 
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+             </AnimatePresence>
+
+             {/* Dark Gradient Overlay (Static on top of images) */}
+             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:hidden pointer-events-none z-10" />
           </div>
         </motion.div>
 
-        {/* TEXT CONTAINER - THE "MAGAZINE" OVERLAP FIX */}
+        {/* TEXT CONTAINER */}
         <div className={`relative z-10 -mt-16 md:mt-0 ${reverse ? "md:order-first" : ""}`}>
           
-          {/* The Card Box */}
           <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -63,7 +89,6 @@ export default function StoryBlock({
                 {children}
               </div>
 
-              {/* Mobile Caption moved inside the card */}
               {caption && (
                   <div className="mt-6 pt-4 border-t border-stone-200 md:hidden">
                       <p className="text-xs font-serif italic text-holy-gold">
