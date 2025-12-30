@@ -109,7 +109,7 @@ export default function Contact() {
                     <p className="opacity-70 text-sm max-w-sm">Kyevaluki Mountain Sanctuary, Machakos County, Kenya. A place set apart for you.</p>
                   </div>
                   <a 
-                    href="https://maps.google.com" // Link to your location on Google Maps
+                    href="https://www.google.com/maps/place/1%C2%B024'32.6%22S+37%C2%B021'56.4%22E/@-1.4090556,37.3656667,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-1.4090556!4d37.3656667?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2N0gBUAM%3D" // Link to your location on Google Maps
                     target="_blank" 
                     rel="noreferrer"
                     className="bg-white text-spirit-green px-8 py-4 rounded-2xl font-bold text-center hover:bg-holy-gold hover:text-white transition-all shadow-xl"

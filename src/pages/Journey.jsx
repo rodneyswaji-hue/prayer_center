@@ -118,14 +118,7 @@ export default function Journey() {
         </StoryBlock>
       </div>
 
-      <div className="bg-white py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-2xl font-bold text-spirit-green mb-10 text-center uppercase tracking-widest">
-            Snapshots of the Sacred
-          </h3>
-          <MasonryGallery />
-        </div>
-      </div>
+
     </PageWrapper>
   );
 }
