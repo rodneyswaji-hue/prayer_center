@@ -21,6 +21,8 @@ export default function Navbar() {
     { name: "The Journey", path: "/journey" },
     { name: "Our Vision", path: "/vision" },
     { name: "Contact", path: "/contact" },
+    { name: "Partners", path: "/partners" },
+    { name: "Culture", path: "/culture" },
   ];
 
   const isActive = (path) => location.pathname === path;
