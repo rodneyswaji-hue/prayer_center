@@ -43,7 +43,7 @@ export default function Footer() {
 
             {/* Social & Action */}
             <div className="flex items-center gap-4">
-               <a href="#" className="hover:text-white transition-colors" aria-label="Facebook">
+               <a href="https://www.facebook.com/profile.php?id=61585655077675" className="hover:text-white transition-colors" aria-label="Facebook">
                   <Facebook size={16} />
                </a>
                

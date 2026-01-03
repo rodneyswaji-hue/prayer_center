@@ -22,7 +22,7 @@ export default function Contact() {
       icon: Facebook, 
       label: "Follow Us", 
       value: "Mountain Prayer Center", 
-      href: "https://facebook.com", // Link to your page
+      href: "https://www.facebook.com/profile.php?id=61585655077675", // Link to your page
       color: "bg-indigo-50" 
     },
   ];

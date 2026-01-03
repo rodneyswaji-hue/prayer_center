@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="relative h-[92vh] flex flex-col justify-end md:justify-center md:items-center overflow-hidden">
+    <section className="relative pt-2 h-[100svh] flex flex-col justify-end md:justify-center md:items-center overflow-hidden">
       
       {/* BACKGROUND LAYER */}
       <div 
